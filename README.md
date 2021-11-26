@@ -26,8 +26,7 @@ The time has the following format: `days.hours.minutes.seconds`
 
 The sleep loop can be manually stopped by creating a file named "stop" (without extension) in the installation directory, next to the `ReadMe.txt` file.
 The default installation directory is:
-
-	- `C:\Program Files\Dust in the Wind\Long Running Installer`
+- `C:\Program Files\Dust in the Wind\Long Running Installer`
 
 ## Donations
 
