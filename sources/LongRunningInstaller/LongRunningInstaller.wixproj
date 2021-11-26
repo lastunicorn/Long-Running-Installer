@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>0.9</ProductVersion>
+    <ProjectGuid>c0d011f1-671a-4566-b80d-2643bc2e4633</ProjectGuid>
+    <OutputName>LongRunningInstaller</OutputName>
+    <OutputType>Package</OutputType>
+    <Name>LongRunningInstaller</Name>
+    <RootNamespace>LongRunningInstaller</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformName>$(Platform)</PlatformName>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformName>$(Platform)</PlatformName>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <PlatformName>$(Platform)</PlatformName>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <PlatformName>$(Platform)</PlatformName>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CustomActions.wxs" />
+    <Compile Include="Directories.wxs" />
+    <Compile Include="FileComponents.wxs" />
+    <Compile Include="Package.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Package.en-us.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="FgwepExtension.wixext">
+      <Name>FgwepExtension.wixext</Name>
+      <HintPath>$(WixExtDir)\FgwepExtension.wixext.dll</HintPath>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt" />
+    <Content Include="install.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="uninstall.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LongRunningInstaller.CustomActions\LongRunningInstaller.CustomActions.csproj">
+      <Name>LongRunningInstaller.CustomActions</Name>
+      <Project>{64ed9413-9b18-4142-8fbf-44a372d22326}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="FG-WiX or WiX Toolset build tools (v3.11 or later) must be installed to build this project. To download FG-WiX, go to https://www.firegiant.com/downloads/. To download the WiX Toolset, go to http://wixtoolset.org/releases/." />
+  </Target>
+</Project>
